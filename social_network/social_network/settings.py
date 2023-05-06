@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_bootstrap5'
 ]
 
 MIDDLEWARE = [
@@ -131,4 +132,6 @@ STATICFILES_DIRS = [
     '/var/www/static/', #не обязателен, только при выгрузке на сервер (если нужно на сервер)
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

@@ -14,10 +14,18 @@
         <span class="logo">ВПаутине</span>
         <h3>Навигация</h3>
         <ul>
+            <a href="{% url 'register' %}"><li><i class="fa-solid fa-pen"></i>Вход/Регистрация</li></a>
             <a href="{% url 'home' %}"><li><i class="fa-solid fa-house"></i>Главная</li></a>
             <a href=""><li><i class="fa-solid fa-address-card"></i>О Вас</li></a>
             <a href=""><li><i class="fa-solid fa-user-group"></i>Друзья</li></a>
             <a href=""><li><i class="fa-solid fa-door-open"></i>Исходящие/Входящие заявки</li></a>
+            {% if messages %}
+        	    {% for message in messages %}
+          	        <div class="alert alert-{{ message.tags }}">
+            	        {{ message }}
+          	        </div>
+        	    {% endfor %}
+            {% endif %}
         </ul>
     </aside>
     <main>

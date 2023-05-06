@@ -130,3 +130,5 @@ STATICFILES_DIRS = [
     BASE_DIR / "main/static",
     '/var/www/static/', #не обязателен, только при выгрузке на сервер (если нужно на сервер)
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

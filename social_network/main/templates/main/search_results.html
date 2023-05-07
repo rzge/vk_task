@@ -11,9 +11,11 @@
         <h1>Search results for "{{ query }}"</h1>
         <ul>
             {% for result in results %}
-                <div class="alert alert-success">
-                    <li><p>username пользователя: {{ result.username }}. Его ID: {{ result.id }}</p></li>
-                </div>
+                {% if user.id != result.id %}
+                    <div class="alert alert-success">
+                        <li><p>username пользователя: {{ result.username }}. Его ID: {{ result.id }}</p></li>
+                    </div>
+                {% endif %}
             {% empty %}
                 <li>No results found.</li>
             {% endfor %}

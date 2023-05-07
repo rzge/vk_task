@@ -72,10 +72,23 @@ main .feature {
   100% {transform: translateY(0);}
 }
 
-
+/* до этого версталось норм, дальше появлялись каки*/
 form {
     margin-left: 32%;
     width: 500px;
-    margin-top: 50px;
+    text-align: center;
 }
 
+div ul li {
+    list-style: none;
+    text-decoration: none;
+    display: block;
+    margin-top: 20px;
+    width: 400px;
+    margin: 20px 34%;
+    text-align: left;
+}
+
+.alert.alert-success {
+    position: initial;
+}

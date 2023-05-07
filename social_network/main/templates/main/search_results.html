@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'main/layout.html' %}
 
-</body>
-</html>
+{% block title %}Результат поиска{% endblock %}
+
+{% block content %}
+    <div class="feauture">
+        <form action="{% url 'search_results' %}" method="get">
+            <input type="text" name="query" placeholder="Введите username">
+            <button type="submit">Search</button>
+        </form>
+        <h1>Search results for "{{ query }}"</h1>
+        <ul>
+            {% for result in results %}
+                <div class="alert alert-success">
+                    <li><p>username пользователя: {{ result.username }}. Его ID: {{ result.id }}</p></li>
+                </div>
+            {% empty %}
+                <li>No results found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

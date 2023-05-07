@@ -1,0 +1,12 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Поиск{% endblock %}
+
+{% block content %}
+    <div class="feauture">
+        <form action="{% url 'search_results' %}" method="get">
+            <input type="text" name="query" placeholder="Введите username">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+{% endblock %}

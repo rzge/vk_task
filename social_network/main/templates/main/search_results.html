@@ -14,6 +14,7 @@
                 {% if user.id != result.id %}
                     <div class="alert alert-success">
                         <li><p>username пользователя: {{ result.username }}. Его ID: {{ result.id }}</p></li>
+                        <a href="{% url 'send_friend_request' result.id%}" class="btn btn-info">добавить</a>
                     </div>
                 {% endif %}
             {% empty %}

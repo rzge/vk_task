@@ -24,17 +24,21 @@ def profile(request):
 
 @login_required
 def send_friend_request(request, userID):
+
     from_user = request.user
     to_user = CustomUser.objects.get(id=userID)
     friend_request, created = Friend_Request.objects.get_or_create(from_user=from_user, to_user=to_user)
     if created:
-        return HttpResponse('friend request accepted')
+        return HttpResponse('friend request sent')
     else:
         return HttpResponse('friend request was already sent')
 
 @login_required
 def accept_friend_request(request, requestID):
     friend_request = Friend_Request.objects.get(id=requestID)
+    print(requestID)
+    print(friend_request)
+    print(friend_request.from_user)
     if friend_request.to_user == request.user:
         friend_request.to_user.friends.add(friend_request.from_user)
         friend_request.from_user.friends.add(friend_request.to_user)
@@ -42,6 +46,7 @@ def accept_friend_request(request, requestID):
         return HttpResponse('friend request accepted')
     else:
         return HttpResponse('friend request not accepted')
+
 
 # @login_required
 # def send_friend_request(request, to_user_id):

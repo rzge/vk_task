@@ -1,7 +1,6 @@
 {% extends 'main/layout.html' %}
-
 {% block title %}Результат поиска{% endblock %}
-
+{% load extras %}
 {% block content %}
     <div class="feauture">
         <form action="{% url 'search_results' %}" method="get">
@@ -14,7 +13,42 @@
                 {% if user.id != result.id %}
                     <div class="alert alert-success">
                         <li><p>username пользователя: {{ result.username }}. Его ID: {{ result.id }}</p></li>
-                        <a href="{% url 'send_friend_request' result.id%}" class="btn btn-info">добавить</a>
+                        <li><p>{{ result }} {{ request.user.from_user.all }}</p> {# request.user.friends.all вот это можно юзать для всей логики#} {# исходящие заявки ex. admin->user1 (я админ)#}
+                        <li><p>{{ result }} {{ user.to_user.all }}</p></li> {# Входящие заявки ex. user1->admin (я админ)#}
+                        <li><p>{{ result }} {{ request.user.friends.all }}</p></li> {#если друзьяшки#}
+                        <li><p>{{ result }} {{ result.from_user.all }}</p>  {# вхходящие заявки в результат поиска#}
+                        <li><p>{{ result }} {{ result.to_user.all }}</p></li> {# исходящие заявки результата поиска#}
+                        <li><p>{{ result }} {{ result.friends.all }}</p></li> {#друзьяшки#}
+                        <li><p>{{ request.result.from_user.all }}</p></li>
+                        <li><p>{{ friend_request.to_user }}</p></li>
+                        {% with user.username as searcher %}
+                            {% with result.username as result_of_search %}
+                                {% with searcher|concat:result_of_search as outcoming %}
+                                    <li><p>{{ outcoming }}</p></li> {#От ищущего к пользователю#}
+                                    {% if outcoming in result.from_user.all %}
+                                        <li><p>Исходящая заявка {{ outcoming }}</p></li> {#От ищущего к пользователю#}
+                                    {% endif %}
+                                    {% if result not in request.user.friends.all and result not in request.user.to_user.all %}
+                                        <a href="{% url 'send_friend_request' result.id%}" class="btn btn-info">Кинуть заявку в друзья</a>
+                                    {% elif result not in request.user.friends.all and result.username in request.user.from_user.all %}
+                                        <a href="{% url 'send_friend_request' result.id%}" class="btn btn-warning">Отменить заявку в друзья</a>
+                                    {% elif result in request.user.friends.all %}
+                                        <a href="{% url 'send_friend_request' result.id%}" class="btn btn-danger">Удалить из друзей</a>
+                                    {% endif %}
+                                {% endwith %}
+                                {% with result_of_search|concat:searcher as incoming %}  {#От пользователю к ищущему#}
+                                    <li><p>{{ incoming }}</p></li> {#От ищущего к пользователю#}
+                                    {% if result not in request.user.friends.all %}
+                                        <a href="{% url 'send_friend_request' result.id%}" class="btn btn-info">добавить</a>
+                                    {% else %}
+                                        <a href="{% url 'send_friend_request' result.id%}" class="btn btn-info">Удалить</a>
+                                    {% endif %}
+                                {% endwith %}
+                                {% for friend_request in all_friend_requests %}
+                                    <li><p>ffff</p></li> {#От ищущего к пользователю#}
+                                {% endfor %}
+                            {% endwith %}
+                        {% endwith %}
                     </div>
                 {% endif %}
             {% empty %}
